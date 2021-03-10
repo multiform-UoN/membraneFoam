@@ -1,0 +1,146 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "../input.txt"
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+
+
+    side
+    {
+        type            fixedValue;//fixedJump;
+        //type            outletInlet;
+        //patchType       cyclic;
+        //jump            uniform -10;
+        //outletValue     uniform 0.9;
+        value           uniform $pout;
+    }
+
+    wall
+    {
+        type            fixedFluxPressure;//fixedJump;
+        //patchType       cyclic;
+        //jump            uniform 10;
+        //value           uniform 100000;
+    }
+
+
+	topmid
+    {
+        //type            fixedFluxPressure;
+        type            fixedValue;
+        value           uniform $pin;
+    }
+
+    bottom
+    {
+        //type              fixedValue;
+        type            fixedFluxPressure;
+        //type            inletOutlet;
+        //inletValue     uniform 0;
+        //type            zeroGradient;
+        //type            membranePressure;
+        membranePermeability uniform 1e-6;
+        membranePorosity uniform 0.5;
+        membraneWidth uniform 1;
+        outsidePressure uniform 0;
+        //type            codedFixedValue;
+        value           uniform 0;
+    //
+    //     redirectType    porousMembrane;
+    //
+    //     code
+    //     #{
+    //
+    //       const IOdictionary& tpdict =
+    //         this->db().objectRegistry::
+    //             lookupObject<IOdictionary>("transportProperties");
+    //
+    //       const IOdictionary& mesh =
+    //         this->db().objectRegistry::
+    //             lookupObject<fvMesh>("mesh");
+    //
+    //       // initial permeability of the membrane
+    //       const scalar K0(tpdict.lookupOrDefault<scalar>("membranePermeability",1e-9));
+    //       // initial porosity of the membrane
+    //       const scalar phi0(tpdict.lookupOrDefault<scalar>("membranePorosity",0.5));
+    //       // membrane width
+    //       const scalar L(tpdict.lookupOrDefault<scalar>("membraneWidth",1e-4));
+    //
+    //       // lookup for pressure and concentration field from the solver
+    //       const GeometricField<vector, fvPatchField, volMesh>& Ufield =
+    //         this->db().objectRegistry::
+    //             lookupObject<GeometricField<vector, fvPatchField, volMesh> >("U");
+    //       //const GeometricField<scalar, fvPatchField, volMesh>& cfield =
+    //       //  this->db().objectRegistry::
+    //       //      lookupObject<GeometricField<scalar, fvPatchField, volMesh> >("c");
+    //
+    //       // index of this boundary
+    //       label patchi=this->patch().index();
+    //
+    //       // concentration on the membrane surface
+    //       //const fvPatchScalarField& cc(cfield.boundaryField()[patchi]);
+    //
+    //       // solid concentration on the surface
+    //       //const dynamicRetentionFvPatchScalarField& Cpr
+    //       //(
+    //       //  refCast<const dynamicRetentionFvPatchScalarField>(cc)
+    //       //);
+    //
+    //       // porosity ratio
+    //       //const scalarField phir((phi0-Cpr.S())/phi0);
+    //       // 1-porosity ratio
+    //       //const scalarField psir((scalar(1)-phi0+Cpr.S())/(scalar(1)-phi0));
+    //
+    //       // compute pressure gradient  across the membrane
+    //       scalarField pgrad
+    //                     (
+    //                       U & vector(0,L/K0,0) //* pow(phir,2)/pow(psir,3)
+    //                     );
+    //
+    //       //Info << "Average permeability " << gSum(K)/K.size() << endl;
+    //
+    //       // set outlet velocity through the membrane
+    //       // assuming the pressure outside is p=0
+    //       operator==( - K*(pfield.boundaryField()[patchi]) );
+    //                 //-K & gradp.boundaryField()[patchi]
+    //     #};
+    //     codeInclude
+    //     #{
+    //         #include "fvCFD.H"
+    //         //#include "dynamicRetentionFvPatchScalarField.H"
+    //     #};
+    //
+    //     codeOptions
+    //     #{
+    //         -I$(LIB_SRC)/finiteVolume/lnInclude -I$(LIB_SRC)/meshTools/lnInclude
+    //     #};
+    //
+    // }
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //
