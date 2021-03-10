@@ -1,0 +1,152 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 7-e91377d89aec
+Exec   : binaryReactionFoam
+Date   : Mar 10 2021
+Time   : 13:47:09
+Host   : "MACBOOK-C02V267WHTDD"
+PID    : 38194
+I/O    : uncollated
+Case   : /Volumes/OpenFOAM/multiformFoam/tutorials/porousMembrane
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libmultiformFoam.dylib"
+Create mesh for time = 0
+
+
+Reading g
+Reading transportProperties
+
+Reading field U
+
+ binaryReactionBC bottom Time = 0 Perm = 1e-12 Por = 0.5 DeltaP = 0
+Reading field p
+
+Reading field psi, xi and chi
+
+Creating viscosity field
+
+Reading/calculating face flux field phi
+
+No MRF models present
+
+No finite volume options present
+Courant Number mean: 0 max: 0
+
+PIMPLE: Convergence criteria found
+        ".*": tolerance 1e-06
+
+
+PIMPLE: Corrector convergence criteria found
+        ".*": tolerance 1e-05, relTol 0.001
+        Calculations will do 100 corrections if the convergence criteria are not met
+
+
+PIMPLE: Operating solver in transient mode with 100 outer correctors
+
+
+
+Starting time loop
+
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libutilityFunctionObjects.dylib"
+Using dynamicCode for functionObject breakthrough at line 56 in "/Volumes/OpenFOAM/multiformFoam/tutorials/porousMembrane/system/controlDict.functions.breakthrough"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libutilityFunctionObjects.dylib"
+Courant Number mean: 0 max: 0
+Time = 10
+
+PIMPLE: Iteration 1
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for Uy, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+PIMPLE: Converged 
+        Doing final iteration
+PIMPLE: Iteration 2
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for Uy, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ binaryReactionBC bottom Time = 10 Perm = 3.33333e-08 Por = 0.5 DeltaP = 0
+DILUPBiCGStab:  Solving for chi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for xi, Initial residual = 0, Final residual = 0, No Iterations 0
+DILUPBiCGStab:  Solving for psi, Initial residual = 0, Final residual = 0, No Iterations 0
+PIMPLE: Converged in 2 iterations
+ExecutionTime = 0.1 s  ClockTime = 0 s
+

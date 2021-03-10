@@ -1,0 +1,29 @@
+//-- mesh size
+length 2;
+width 1;
+xcells 50;
+ycells 100;
+
+//-- inlet/outlet positions (relative)
+outlet1 0;
+outlet2 .5;
+inlet1  0.99;
+inlet2  1;
+
+
+//- fluid properties
+viscosity 1;
+diffusivity 1e-6;
+pp 0;
+pin 1;
+pout 0.9;
+
+//- reaction
+reactionConstant 1e-2;
+
+//- membrane properties
+permeability 1e-12;
+thickness 3e-5;
+porosity 0.5;
+osmotic .89;
+molVolume 1;
