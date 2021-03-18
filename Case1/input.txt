@@ -5,9 +5,9 @@ xcells 30;
 ycells 20;
 
 //-- time scales
-timestep 5;
-finaltime 1e4;
-writestep 1000;
+timestep 0.01;
+finaltime 5e3;
+writestep 500;
 
 //-- inlet/outlet positions (relative)
 outlet1 0;
@@ -16,11 +16,11 @@ inlet1  0.99;
 inlet2  1;
 
 //- fluid properties
-viscosity 1;
+viscosity 9.4e-4;
 diffusivity 1e-6;
-pp   0;
-pin  1;
-pout 0.9;
+pp   500;
+pin  1500;
+pout 1000;
 
 //- reaction
 reactionConstant 1e-10;
@@ -31,3 +31,4 @@ thickness 3e-5;
 porosity 0.5;
 osmotic .89;
 molVolume 1;
+

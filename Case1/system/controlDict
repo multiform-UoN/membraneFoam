@@ -96,7 +96,7 @@ functions
             Info << "Fluxes Membrane/In/Relative = " //<< mesh().time().timeName()
                << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL) << "\n";
             Info << "Concentration Membrane/In/Average = " //<< mesh().time().timeName()
-              << " " << totFluxOut <<" " << totFluxIn << " " << COut << "\n";
+              << " " << CfluxOut <<" " << CfluxIn << " " << COut << "\n";
             Info << "PressureMembrane = " //<< mesh().time().timeName()
                << " " << pMean <<"\n\n\n";
         #};

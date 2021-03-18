@@ -58,12 +58,12 @@ boundaryField
         //inletValue     uniform 0;
         //type            zeroGradient;
         //type            membranePressure;
-        membranePermeability uniform 1e-6;
-        membranePorosity uniform 0.5;
-        membraneWidth uniform 1;
-        outsidePressure uniform 0;
+       // membranePermeability uniform 1e-6;
+       // membranePorosity uniform 0.5;
+       // membraneWidth uniform 1;
+       // outsidePressure uniform 0;
         //type            codedFixedValue;
-        value           uniform 0;
+       // value           uniform 0;
     //
     //     redirectType    porousMembrane;
     //
