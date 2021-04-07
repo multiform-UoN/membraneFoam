@@ -93,12 +93,12 @@ functions
 
 //            std::ofstream file;
 //            file.open("breakthrough.dat", std::ios::out | std::ios::app);
-            Info << "Fluxes Membrane/In/Relative = " //<< mesh().time().timeName()
-               << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL) << "\n";
-            Info << "Concentration Membrane/In/Average = " //<< mesh().time().timeName()
-              << " " << CfluxOut <<" " << CfluxIn << " " << COut << "\n";
-            Info << "PressureMembrane = " //<< mesh().time().timeName()
-               << " " << pMean <<"\n\n\n";
+            Info << "functionObject Time " << mesh().time().timeName() <<  " Fluxes Membrane/In/Relative  "
+               << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL);
+            Info << " Concentration Membrane/In/Average " //<< mesh().time().timeName()
+              << " " << CfluxOut <<" " << CfluxIn << " " << COut;
+            Info << " PressureMembrane " //<< mesh().time().timeName()
+               << " " << pMean <<"\n\n";
         #};
     }
 }
