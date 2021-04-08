@@ -15,6 +15,10 @@ outlet2 .5;
 inlet1  0.99;
 inlet2  1;
 
+//-- inlet concentration
+inletChi 1;
+initialChi 0;
+
 //- fluid properties
 viscosity 0.0259;
 diffusivity 8.7e-6;
