@@ -48,7 +48,7 @@ timePrecision   6;
 runTimeModifiable true;
 
 libs
-("libmultiformFoam.so");
+("libmembraneMayo.so");
 
 functions
 {
