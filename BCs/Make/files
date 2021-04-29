@@ -1,0 +1,10 @@
+Robin/RobinFvPatchFields.C
+RobinPhi/RobinPhiFvPatchScalarField.C
+binaryReaction/binaryReactionFvPatchScalarField.C
+noFlux/noFluxFvPatchFields.C
+membraneVelocity/membraneVelocityFvPatchField.C
+membranePressure/membranePressureFvPatchField.C
+membranePressureGrad/membranePressureGradFvPatchField.C
+
+
+LIB = $(FOAM_USER_LIBBIN)/libmembraneMayo

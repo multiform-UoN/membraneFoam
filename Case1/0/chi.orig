@@ -10,7 +10,7 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      c;
+    object      chi;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -18,7 +18,7 @@ FoamFile
 
 dimensions      [0 0 0 0 0 0 0];
 
-internalField   uniform 1;
+internalField   uniform $initialChi;
 
 boundaryField
 {
@@ -36,7 +36,7 @@ boundaryField
     topmid
     {
         type            fixedValue;
-        value           uniform 1;
+        value           uniform $inletChi;
     }
 
     bottom
