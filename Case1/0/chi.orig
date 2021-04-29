@@ -45,7 +45,7 @@ boundaryField
         value uniform 0;
         S uniform 0;
         RobinD   uniform $diffusivity;
-        RobinK   uniform $reactionConstant;
+        RobinK   uniform #calc "$reactionConstant*$thickness";
         RobinF   uniform 0;
         Kd uniform 0;
     }
