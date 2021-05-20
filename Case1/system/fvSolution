@@ -73,7 +73,7 @@ solvers
     consistent yes;
     momentumPredictor   off;
     nOuterCorrectors    100;
-    nCorrectors         5;
+    nCorrectors         10;
     nNonOrthogonalCorrectors 0;
     pRefCell            0;
     pRefValue           0;

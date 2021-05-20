@@ -2,12 +2,12 @@
 length 3.5;
 width 2.5;
 xcells 30;
-ycells 20;
+ycells 60;
 
 //-- time scales
 timestep 0.003;
 finaltime 25;
-writestep 5;
+writestep 1;
 
 //-- inlet/outlet positions (relative)
 outlet1 0;
@@ -16,23 +16,22 @@ inlet1  0.99;
 inlet2  1;
 
 //-- inlet concentration
-inletChi 1;
+inletChi 0.0129;
 initialChi 0;
 
 //- fluid properties
-viscosity 0.0259;
+viscosity 1;
 diffusivity 8.7e-6;
-pp   101;
-pin  5500;
-pout 5000;
+pp   -1000;
+pin  1;
+pout 0;
 
 //- reaction
-reactionConstant 4.5e-2;
+reactionConstant 1e-18;
 
 //- membrane properties
-permeability 1e-12;
-thickness 3e-5;
+permeability 9e-11;
+thickness 1e-4;
 porosity 0.7;
-osmotic 2009;
-molVolume 10;
-
+osmotic 0;
+molVolume 0;
