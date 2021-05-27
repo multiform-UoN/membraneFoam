@@ -45,12 +45,11 @@ boundaryField
 
 	topmid  // inlet
     {
-       // type zeroGradient;
-       type fixedValue;
-        //value uniform (0 -1e-3 0);
-	value uniform (0.006 0 0);
-        //type         inletOutlet;
-        //inletValue   uniform ( 0 0);
+       type zeroGradient;
+       //type fixedValue;
+       //value uniform (0 -1e-3 0);
+       //type         inletOutlet;
+       //inletValue   uniform ( 0 0);
     }
 
     bottom

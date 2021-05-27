@@ -71,7 +71,7 @@ solvers
 "PIMPLE|PISO|SIMPLE"
 {
     consistent yes;
-    momentumPredictor   off;
+    momentumPredictor   on;
     nOuterCorrectors    100;
     nCorrectors         10;
     nNonOrthogonalCorrectors 0;
@@ -101,7 +101,7 @@ relaxationFactors
 {
     equations
     {
-        U 0.8;
+        U 0.95;
         p 1;
     }
     fields
