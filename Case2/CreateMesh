@@ -1,0 +1,16 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial clean functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication blockMesh
+runApplication topoSet
+runApplication createPatch -overwrite
+# cp system/extrudeMeshDict.side system/extrudeMeshDict
+# runApplication extrudeMesh
+# mv log.extrudeMesh log.extrudeMesh.side
+# cp system/extrudeMeshDict.top system/extrudeMeshDict
+# runApplication extrudeMesh
+# mv log.extrudeMesh log.extrudeMesh.top
+# rm system/extrudeMeshDict

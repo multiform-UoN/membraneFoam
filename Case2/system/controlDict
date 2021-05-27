@@ -1,0 +1,108 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "../input.txt"
+
+application     scalarTransportFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         $finaltime;
+
+deltaT          $timestep;
+
+writeControl    runTime;
+
+writeInterval   $writestep;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+libs
+("libmembraneMayo.so");
+
+functions
+{
+    breakthrough
+    {
+        // Load the library containing the 'coded' functionObject
+        libs            ("libutilityFunctionObjects.so");
+
+        type coded;
+
+        // Name of on-the-fly generated functionObject
+        name breakthrough;
+
+        codeWrite
+        #{
+            // Lookup c
+            //Info<< "Looking up field c\n" << endl;
+            const volScalarField& c = mesh().lookupObject<volScalarField>("chi");
+            const volScalarField& p = mesh().lookupObject<volScalarField>("p");
+            const surfaceScalarField& U = mesh().lookupObject<surfaceScalarField>("phi");
+
+            //Get outlet patch
+            label patchId = mesh().boundaryMesh().findPatchID("bottom");
+            label patchIdIn = mesh().boundaryMesh().findPatchID("topmid");
+            const scalarField& cOut(c.boundaryField()[patchId]);
+            const scalarField& cIn(c.boundaryField()[patchIdIn]);
+            const scalarField& pOut(p.boundaryField()[patchId]);
+            //const vectorField& Sf( mesh().Sf().boundaryField()[patchId]);
+            const scalarField& magSf(mesh().magSf().boundaryField()[patchId]);
+            const scalarField& Uout(U.boundaryField()[patchId]);
+            const vectorField& SfIn( mesh().Sf().boundaryField()[patchIdIn]);
+            const scalarField& magSfIn(mesh().magSf().boundaryField()[patchIdIn]);
+            const scalarField& UIn(U.boundaryField()[patchIdIn]);
+
+            const scalar CfluxOut(gSum(cOut*Uout));
+            const scalar COut(gSum(cOut*magSf)/gSum(magSf));
+            const scalar CfluxIn(gSum(cIn*UIn));
+
+            const scalar totFluxOut = gSum(Uout);//&Sf);///gSum(magSf);
+            const scalar totFluxIn = gSum(UIn);//&SfIn);///gSum(magSfIn);
+            const scalar pMean = gSum(pOut*magSf)/gSum(magSf);
+
+//            std::ofstream file;
+//            file.open("breakthrough.dat", std::ios::out | std::ios::app);
+            Info << "functionObject Time " << mesh().time().timeName() <<  " Fluxes Membrane/In/Relative  "
+               << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL);
+            Info << " Concentration Membrane/In/Average " //<< mesh().time().timeName()
+              << " " << CfluxOut <<" " << CfluxIn << " " << COut;
+            Info << " PressureMembrane " //<< mesh().time().timeName()
+               << " " << pMean <<"\n\n";
+        #};
+    }
+}
+
+
+
+// ************************************************************************* //
