@@ -230,8 +230,7 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
     RobinKeff_ = - RobinKorig + RobinK0
                 - scalar(2)*RobinKorig*C;
 
-    RobinFeff_ = RobinF0
-                + (RobinKorig*reaction + RobinF0*(xi-C))
+    RobinFeff_ = (RobinKorig*reaction + RobinF0*(xi-C))
                 - RobinKeff_*C
                 + Kd_*S_;
   }
