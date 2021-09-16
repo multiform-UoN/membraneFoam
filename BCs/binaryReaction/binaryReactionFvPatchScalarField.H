@@ -86,6 +86,8 @@ private:
     //- non reactive component
     word xiName_;
 
+    word reactionType_;
+
 public:
 
     //- Runtime type information

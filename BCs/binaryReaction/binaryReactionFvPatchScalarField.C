@@ -45,7 +45,8 @@ RobinKeff_(p.size()),
 Kd_(p.size()),
 RobinFeff_(p.size()),
 timeIndex_(-1),
-xiName_("xi")
+xiName_("xi"),
+reactionType_("binary")
 {
 
 }
@@ -65,7 +66,8 @@ RobinKeff_(p.size(),scalar(0)),
 Kd_("Kd",dict,p.size()),
 RobinFeff_(p.size(),scalar(0)),
 timeIndex_(-1),
-xiName_(dict.lookupOrDefault<word>("xi", "xi"))
+xiName_(dict.lookupOrDefault<word>("xi", "xi")),
+reactionType_(dict.lookupOrDefault<word>("reactionType", "binary"))
 {
 }
 
@@ -85,7 +87,8 @@ RobinKeff_(mapper(ptf.RobinKeff_)),//,mapper),
 Kd_(mapper(ptf.Kd_)),//,mapper),
 RobinFeff_(mapper(ptf.RobinFeff_)),//,mapper),
 timeIndex_(ptf.timeIndex_),
-xiName_(ptf.xiName_)
+xiName_(ptf.xiName_),
+reactionType_(ptf.reactionType_)
 {
 
 }
@@ -103,7 +106,8 @@ RobinKeff_(ptf.RobinKeff_),
 Kd_(ptf.Kd_),
 RobinFeff_(ptf.RobinFeff_),
 timeIndex_(ptf.timeIndex_),
-xiName_(ptf.xiName_)
+xiName_(ptf.xiName_),
+reactionType_(ptf.reactionType_)
 {
 
 }
@@ -122,7 +126,8 @@ RobinKeff_(ptf.RobinKeff_),
 Kd_(ptf.Kd_),
 RobinFeff_(ptf.RobinFeff_),
 timeIndex_(ptf.timeIndex_),
-xiName_(ptf.xiName_)
+xiName_(ptf.xiName_),
+reactionType_(ptf.reactionType_)
 {
 
 }
@@ -166,6 +171,7 @@ void Foam::binaryReactionFvPatchScalarField::write(Ostream& os) const
   writeEntry(os, "RobinKeff2", RobinKeff_);
   writeEntry(os, "RobinFeff", RobinFeff_);
   writeEntry(os, "xi", xiName_);
+  writeEntry(os, "reactionType", reactionType_);
 }
 
 void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
@@ -196,36 +202,41 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
   const scalarField& RobinK0 = RobinPhiFvPatchScalarField::RobinK();
   const scalarField& RobinF0 = RobinPhiFvPatchScalarField::RobinF();
 
-  scalarField xiSqr(C.size(),scalar(0));
-
   if ( mesh.objectRegistry::template foundObject<volScalarField>(xiName_) )
   {
     const fvPatchField<scalar>& xi =
         patch().lookupPatchField<volScalarField, scalar>(xiName_);
-    xiSqr = xi*xi;
-  }
+  
+    //- Get old time concentration
+    if(timeIndex_!=this->db().time().timeIndex())
+    {
+      S0_ = S_;
+      timeIndex_ = this->db().time().timeIndex();
+    }
 
-  //- Get old time concentration
-  if(timeIndex_!=this->db().time().timeIndex())
-  {
-    S0_ = S_;
-    timeIndex_ = this->db().time().timeIndex();
-  }
+    scalarField reaction((C-xi)*(C+xi));
+
+    if (reactionType_=="2")
+    {
+      reaction *= (C-xi)/scalar(2);
+    }
+
     // - Evolution equation for S (implicit time stepping)
-    S_ = (S0_ + deltaT*(RobinKorig* (C*C - xiSqr) + RobinF0))
+    S_ = (S0_ + deltaT*(RobinKorig*reaction + RobinF0*(xi-C)))
           /
-         (scalar(1) + deltaT*Kd_);
+          (scalar(1) + deltaT*Kd_);
 
     //- Firt guess for Robin coefficients
     RobinKeff_ = - RobinKorig + RobinK0
-               - scalar(2)*RobinKorig*C;
+                - scalar(2)*RobinKorig*C;
 
     RobinFeff_ = RobinF0
-               + RobinKorig*xiSqr
-               + RobinKorig*C*C
-               + Kd_*S_;
+                + (RobinKorig*reaction + RobinF0*(xi-C))
+                - RobinKeff_*C
+                + Kd_*S_;
+  }
 
-    RobinFvPatchScalarField::updateCoeffs();
+  RobinFvPatchScalarField::updateCoeffs();
 }
 
 

@@ -205,6 +205,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         }
     }
 
+    K_ = K0_;
+
     if  (
         mesh.objectRegistry::
         template foundObject<volScalarField>(solidS_)
@@ -234,12 +236,43 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
             phi_ = phi0_ - solidV_*ss/w_;
             phi_ *= Foam::pos(phi_);
 
+            // Additional solid (hard-coded)
+
+            if  (
+                mesh.objectRegistry::
+                template foundObject<volScalarField>(solidS_+"2")
+                )
+            {
+                //- solid concentration on the surface
+                const fvPatchScalarField& cc2
+                    =
+                    patch().lookupPatchField<volScalarField, scalar>(solidS_+"2");
+
+                scalarField ss2(cc2);
+
+                // - binaryReaction BC
+                if  (binaryReaction_)
+                {
+                    const binaryReactionFvPatchScalarField& Cpr
+                    (
+                    refCast<const binaryReactionFvPatchScalarField>(cc)
+                    );
+
+                    ss2 = Cpr.S();
+                }
+
+                // porosity
+                phi_ = phi_ - solidV_*ss2/w_;
+                phi_ *= Foam::pos(phi_);
+            }
+            
             //- permeability
             K_ =  K0_
                   *
                   Foam::pow(scalar(1)-phi0_,2) * Foam::pow(phi_,3)
                   /
                   (Foam::pow(scalar(1)-phi_,2) * Foam::pow(phi0_,3));
+
 
             if (writeAvg_)
             {
