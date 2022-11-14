@@ -1,0 +1,106 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "../input.txt"
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField uniform (0 0 0);
+
+
+boundaryField
+{
+
+    inlet
+    {
+        type    codedFixedValue;
+        value   uniform (0 0 0);
+        name    parabolicNormalInlet;   // name of generated BC
+
+        code
+        #{
+            
+            // Initialize vector field for internal field  
+            vectorField fld(patch().size(), vector(0,0,0));
+            
+            // This is the channel height (input)
+            scalar maxY(0.005);
+            
+            // This is the average velocity (input)
+            scalar uave(0.01);
+            
+            // Current internal field
+            const vectorField intfld(this->patchInternalField());
+
+            forAll(patch().Cf(),facei)
+            {
+                scalar y(patch().Cf()[facei].y());
+                fld[facei].x() = -6.*uave*(y*y/(maxY*maxY)-y/maxY);
+                
+                // Zero gradient for the y-component (take first cell value)
+                fld[facei].y() = intfld[facei].y();
+            }
+
+            operator==(fld);
+        #};
+    }
+
+
+    outlet
+    {
+        type           zeroGradient;
+    }
+
+
+
+    membrane 
+    {
+        type            membraneVelocity;
+        membranePermeability  $permeability;
+        membranePorosity  $porosity;
+        membraneWidth $thickness;
+        osmoticPressure "chi";
+        osmoticCoefficient $osmotic;
+        solidSource "chi";
+        solidConcentration "binaryReaction";
+        solidModel "KozenyCarman32";
+        solidBinaryReaction true;
+        solidVolume $molVolume;
+        writeAvg true;
+
+        outsidePressure uniform $pp;
+
+    }
+    front
+    {
+        type            wedge;
+    }
+
+    back
+    {
+        type            wedge;
+    }
+    axis
+    {
+        type            empty;
+    }
+
+
+}
+
+
+// ************************************************************************* //

@@ -1,0 +1,76 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "../input.txt"
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField uniform (0 0 0);
+
+boundaryField
+{
+
+    inlet
+    {
+       type zeroGradient;
+    }
+
+
+    outlet
+    {
+        type           zeroGradient;
+    }
+
+
+
+    membrane 
+    {
+        type            membraneVelocity;
+        membranePermeability  $permeability;
+        membranePorosity  $porosity;
+        membraneWidth $thickness;
+        osmoticPressure "chi";
+        osmoticCoefficient $osmotic;
+        solidSource "chi";
+        solidConcentration "binaryReaction";
+        solidModel "KozenyCarman32";
+        solidBinaryReaction true;
+        solidVolume $molVolume;
+        writeAvg true;
+
+        outsidePressure uniform $pp;
+
+    }
+    front
+    {
+        type            wedge;
+    }
+
+    back
+    {
+        type            wedge;
+    }
+    axis
+    {
+        type            empty;
+    }
+
+
+}
+
+
+// ************************************************************************* //

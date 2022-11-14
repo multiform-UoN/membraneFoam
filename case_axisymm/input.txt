@@ -1,0 +1,35 @@
+//-- mesh size
+radius 5;
+length 100;
+xcells 600;
+rcells 120;
+
+// good aspect ratio cells x 1000, r 120 
+//
+//
+
+//-- time scales
+timestep 0.1;
+finaltime 10;
+writestep 1;
+
+//-- inlet concentration
+inletChi 0.0129;
+initialChi 0.0;
+
+//- fluid properties
+viscosity 1e-3;
+diffusivity 1e-7;
+pp   1e3;
+pin  10000;
+pout 5000;
+
+//- reaction
+reactionConstant 1e-10;
+
+//- membrane properties
+permeability 1e-14;
+thickness 1e-3;
+porosity 0.7;
+osmotic 100;
+molVolume 240;
