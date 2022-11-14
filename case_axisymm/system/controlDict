@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  6
+    \\  /    A nd           | Version:  8
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -71,29 +71,26 @@ functions
             const surfaceScalarField& U = mesh().lookupObject<surfaceScalarField>("phi");
 
             //Get outlet patch
-            label patchId = mesh().boundaryMesh().findPatchID("outlet");
+            label patchIdOut = mesh().boundaryMesh().findPatchID("outlet");
             label patchIdIn = mesh().boundaryMesh().findPatchID("inlet");
-            const scalarField& cOut(c.boundaryField()[patchId]);
+            const scalarField& cOut(c.boundaryField()[patchIdOut]);
             const scalarField& cIn(c.boundaryField()[patchIdIn]);
-            const scalarField& pOut(p.boundaryField()[patchId]);
-            //const vectorField& Sf( mesh().Sf().boundaryField()[patchId]);
-            const scalarField& magSf(mesh().magSf().boundaryField()[patchId]);
-            const scalarField& Uout(U.boundaryField()[patchId]);
-            const vectorField& SfIn( mesh().Sf().boundaryField()[patchIdIn]);
+            const scalarField& pOut(p.boundaryField()[patchIdOut]);
+            const scalarField& magSfOut(mesh().magSf().boundaryField()[patchIdOut]);
+            const scalarField& Uout(U.boundaryField()[patchIdOut]);
+            const vectorField& SfIn( mesh().Sf().boundaryField()[patchIdOut]);
             const scalarField& magSfIn(mesh().magSf().boundaryField()[patchIdIn]);
             const scalarField& UIn(U.boundaryField()[patchIdIn]);
 
             const scalar CfluxOut(gSum(cOut*Uout));
-            const scalar COut(gSum(cOut*magSf)/gSum(magSf));
+            const scalar COut(gSum(cOut*magSfOut)/gSum(magSfOut));
             const scalar CfluxIn(gSum(cIn*UIn));
 
-            const scalar totFluxOut = gSum(Uout);//&Sf);///gSum(magSf);
-            const scalar totFluxIn = gSum(UIn);//&SfIn);///gSum(magSfIn);
-            const scalar pMean = gSum(pOut*magSf)/gSum(magSf);
+            const scalar totFluxOut = gSum(Uout);
+            const scalar totFluxIn = gSum(UIn);
+            const scalar pMean = gSum(pOut*magSfOut)/gSum(magSfOut);
 
-//            std::ofstream file;
-//            file.open("breakthrough.dat", std::ios::out | std::ios::app);
-            Info << "functionObject Time " << mesh().time().timeName() <<  " Fluxes Membrane/In/Relative  "
+            Info << "functionObject Time " << mesh().time().timeName() <<  " Fluxes Out/In/Relative  "
                << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL);
             Info << " Concentration Membrane/In/Average " //<< mesh().time().timeName()
               << " " << CfluxOut <<" " << CfluxIn << " " << COut;
