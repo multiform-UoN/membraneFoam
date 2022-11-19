@@ -19,9 +19,9 @@ solvers
 {
     p
     {
-        solver          GAMG;//PBiCGStab;
+        solver          PCG;//GAMG;//PBiCGStab;
         smoother        FDIC;
-        preconditioner  FDIC;
+        preconditioner  DIC;
         tolerance       1e-10;
         relTol          1e-3;
         //maxIter         20;
@@ -30,40 +30,35 @@ solvers
     pFinal
     {
         $p;
-        relTol          0;
+        //relTol          0;
     }
 
     U
     {
-        //type            coupled;
-        solver          PBiCGStab;
-        //solver          PBiCCCG;
+        type            coupled;
+        //solver          PBiCGStab;
+        solver          PBiCCCG;
         preconditioner  DILU;
         smoother        symGaussSeidel;
-        tolerance       1e-10;
-        //tolerance       (1e-10 1e-8 1);
-        relTol          1e-5;
-        //relTol          (0.01 0.01 1);
+        //tolerance       1e-10;
+        tolerance       (1e-10 1e-10 1e-10);
+        //relTol          1e-2;
+        relTol          (0.01 0.01 0.01);
     }
 
     UFinal
     {
         $U;
-        relTol          0;
+        //relTol          0;
     }
 
-    "(c|psi|chi|xi)"
+    "(c|psi|chi|xi).*"
     {
-        solver          PBiCGStab;
+        solver          PBiCGStab;//GAMG;
         preconditioner  DILU;
+        smoother        GaussSeidel;
         tolerance       1e-10;
-        relTol          1e-4;
-    }
-
-    "(c|psi|chi|xi)Final"
-    {
-        $c;
-        relTol          0;
+        relTol          1e-2;
     }
 
 }
@@ -72,8 +67,8 @@ solvers
 {
     consistent yes;
     momentumPredictor   on;
-    nOuterCorrectors    100;
-    nCorrectors         10;
+    nOuterCorrectors    10;
+    nCorrectors         3;
     nNonOrthogonalCorrectors 0;
     pRefCell            0;
     pRefValue           0;

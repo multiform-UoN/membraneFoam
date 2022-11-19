@@ -11,7 +11,7 @@ rcells 120;
 //-- time scales
 timestep 0.1;
 finaltime 10;
-writestep 1;
+writestep 0.1;
 
 //-- inlet concentration
 inletChi 0.0129;
@@ -28,8 +28,8 @@ pout 5000;
 reactionConstant 1e-10;
 
 //- membrane properties
-permeability 1e-14;
+permeability 1e-15;
 thickness 1e-3;
 porosity 0.7;
 osmotic 100;
-molVolume 240;
+molVolume 0;
