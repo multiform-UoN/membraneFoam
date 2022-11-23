@@ -18,15 +18,15 @@ viscosity 1e-3;
 diffusivity 1e-7;
 pp   0;
 pin  200;
-pout 100;
+pout 0;
 Uin  1e-1;
 
 //- reaction
 reactionConstant 1e-5;
 
 //- membrane properties
-permeability 1e-18;
+permeability 1e-19;
 thickness 1e-4;
 porosity 0.7;
-osmotic 100;
+osmotic $pout;
 molVolume 0;

@@ -48,6 +48,7 @@ boundaryField
         RobinK   uniform #calc "$reactionConstant*$thickness";
         RobinF   uniform 0;
         Kd uniform 0;
+        writeAvg true;
     }
 
     frontAndBack

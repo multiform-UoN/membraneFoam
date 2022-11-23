@@ -88,6 +88,9 @@ private:
 
     word reactionType_;
 
+    // - debug and plotting
+    bool writeAvg_;
+
 public:
 
     //- Runtime type information

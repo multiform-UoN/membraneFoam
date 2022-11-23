@@ -19,7 +19,54 @@ FoamFile
 
 dimensions      [0 1 -1 0 0 0 0];
 
-internalField uniform (0 0 0);
+// internalField uniform ($Uin 0 0);
+
+internalField  #codeStream
+{
+  codeInclude
+  #{
+     #include "fvCFD.H"
+     #include "Time.H"
+  #};
+
+  codeOptions
+  #{
+     -I$(LIB_SRC)/finiteVolume/lnInclude \
+     -I$(LIB_SRC)/meshTools/lnInclude
+  #};
+
+  codeLibs
+  #{
+     -lmeshTools \
+     -lfiniteVolume
+  #};
+
+  code
+  #{
+    const IOdictionary& d = static_cast<const IOdictionary&>(dict);
+    const fvMesh& mesh = refCast<const fvMesh>(d.db());
+
+
+    // This is the channel height (input)
+    scalar maxY(3e-3);
+
+    // This is the average velocity (input)
+    scalar uave(1e-1);
+
+    vectorField v(mesh.nCells(), vector(0.,0.,0.));
+
+
+    forAll(v, i)
+    {
+       const scalar y = mesh.C()[i][2];
+       v[i].x() = -8.*uave*(y*y/(maxY*maxY)-y/maxY);
+    }
+
+    writeEntry(os, "", v);
+
+  #};
+};
+
 
 boundaryField
 {
@@ -46,7 +93,7 @@ boundaryField
     //    type fixedValue;
     //    value uniform ($Uin 0 0);
     type    codedFixedValue;
-    value   uniform (0 0 0);
+    value   uniform ($Uin 0 0);
     name    parabolicNormalInlet;   // name of generated BC
 
     code
@@ -70,7 +117,7 @@ boundaryField
             fld[facei].x() = -8.*uave*(y*y/(maxY*maxY)-y/maxY);
 
             // Zero gradient for the y-component (take first cell value)
-            // fld[facei].y() = intfld[facei].y();
+            fld[facei].y() = intfld[facei].y();
         }
 
         operator==(fld);

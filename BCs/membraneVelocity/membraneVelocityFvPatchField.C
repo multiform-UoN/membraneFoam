@@ -184,8 +184,9 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
 
     if (writeAvg_)
     {
-        Info<<"binaryReactionBC " << this->patch().name()
-          << " Time = " << mesh.time().timeName();
+        Info<<"membraneVelocity BC " << this->patch().name()
+          << " Time = " << mesh.time().timeName()
+          << " Vel = " <<  gSum(this->patch().magSf()*(*this))/area;
     }
     if  (
         mesh.objectRegistry::
@@ -200,8 +201,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         // assuming zero concentration on the other side
         if (writeAvg_)
         {
-            Info << " DeltaTP = " << gSum(this->patch().magSf()*deltaP)/area        // average total pressure
-                 << " DeltaOP = " << gSum(this->patch().magSf()*osmoticC_*cc)/area; // average osmotic pressure
+            Info << " DeltaPTot = " << gSum(this->patch().magSf()*deltaP)/area        // average total pressure
+                 << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area; // average osmotic pressure
         }
     }
 

@@ -19,11 +19,11 @@ solvers
 {
     p
     {
-        solver          PCG;
+        solver          GAMG;//PCG;
         smoother        DIC;
         preconditioner  DIC;
         tolerance       1e-10;
-        relTol          1e-3;
+        relTol          1e-2;
         maxIter         100;
     }
 
@@ -74,9 +74,9 @@ solvers
 {
     consistent yes;
     momentumPredictor   on;
-    nOuterCorrectors    100;  // PIMPLE loops
-    nCorrectors         10;   // pressure loop
-    nNonOrthogonalCorrectors 1;
+    nOuterCorrectors    10;  // PIMPLE loops
+    nCorrectors         3;   // pressure loop
+    nNonOrthogonalCorrectors 0;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
@@ -103,7 +103,7 @@ relaxationFactors
 {
     equations
     {
-        U 0.95;
+        U 0.9;
         p 1;
     }
     fields

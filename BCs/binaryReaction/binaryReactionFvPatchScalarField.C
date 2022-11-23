@@ -46,7 +46,8 @@ Kd_(p.size()),
 RobinFeff_(p.size()),
 timeIndex_(-1),
 xiName_("xi"),
-reactionType_("binary")
+reactionType_("binary"),
+writeAvg_(false)
 {
 
 }
@@ -67,7 +68,8 @@ Kd_("Kd",dict,p.size()),
 RobinFeff_(p.size(),scalar(0)),
 timeIndex_(-1),
 xiName_(dict.lookupOrDefault<word>("xi", "xi")),
-reactionType_(dict.lookupOrDefault<word>("reactionType", "binary"))
+reactionType_(dict.lookupOrDefault<word>("reactionType", "binary")),
+writeAvg_(dict.lookupOrDefault<bool>("writeAvg", false))
 {
 }
 
@@ -88,7 +90,8 @@ Kd_(mapper(ptf.Kd_)),//,mapper),
 RobinFeff_(mapper(ptf.RobinFeff_)),//,mapper),
 timeIndex_(ptf.timeIndex_),
 xiName_(ptf.xiName_),
-reactionType_(ptf.reactionType_)
+reactionType_(ptf.reactionType_),
+writeAvg_(ptf.writeAvg_)
 {
 
 }
@@ -107,7 +110,8 @@ Kd_(ptf.Kd_),
 RobinFeff_(ptf.RobinFeff_),
 timeIndex_(ptf.timeIndex_),
 xiName_(ptf.xiName_),
-reactionType_(ptf.reactionType_)
+reactionType_(ptf.reactionType_),
+writeAvg_(ptf.writeAvg_)
 {
 
 }
@@ -127,7 +131,8 @@ Kd_(ptf.Kd_),
 RobinFeff_(ptf.RobinFeff_),
 timeIndex_(ptf.timeIndex_),
 xiName_(ptf.xiName_),
-reactionType_(ptf.reactionType_)
+reactionType_(ptf.reactionType_),
+writeAvg_(ptf.writeAvg_)
 {
 
 }
@@ -180,6 +185,10 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
 //   const Pstream::commsTypes commsType
 // )
 {
+  if (this->updated())
+  {
+    return;
+  }
 
   RobinPhiFvPatchScalarField::updateCoeffs();
 
@@ -234,6 +243,14 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
     RobinFeff_ =   RobinKorig*xi*xi // K chi0^2 + Kxi^2
                  + RobinKorig*C*C
                  + Kd_*S_;
+  }
+
+  if (writeAvg_)
+  {
+    Info << "binaryReaction BC " << this->patch().name()
+          << " Time = " << mesh.time().timeName();
+    Info << " S = " << gSum(this->patch().magSf()*S_)/gSum(this->patch().magSf()); // average solid
+    Info << endl;
   }
 
   RobinFvPatchScalarField::updateCoeffs();
