@@ -5,12 +5,12 @@ xcells 2000;
 ycells 240;
 
 //-- time scales
-timestep 0.01;
-finaltime 10;
+timestep 1;
+finaltime 100;
 writestep 1;
 
 //-- inlet concentration
-inletChi 0.0129;
+inletChi 1;
 initialChi 0.0;
 
 //- fluid properties
@@ -24,8 +24,8 @@ pout 500;
 reactionConstant 1e-5;
 
 //- membrane properties
-permeability 1e-14;
+permeability 0.5e-15;
 thickness 1e-3;
 porosity 0.7;
 osmotic 100;
-molVolume 210;
+molVolume 1;

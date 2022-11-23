@@ -194,6 +194,7 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
 
   if (ddtScheme=="steadyState")
   {
+    Info << "binaryReactionBC in steady state, running with time step " << STEADY_TIMESTEP;
     deltaT = STEADY_TIMESTEP;
   }
 

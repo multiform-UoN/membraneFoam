@@ -23,7 +23,7 @@ solvers
         smoother        FDIC;
         preconditioner  FDIC;
         tolerance       1e-10;
-        relTol          1e-3;
+        relTol          1e-2;
         //maxIter         20;
     }
 
@@ -42,7 +42,7 @@ solvers
         smoother        symGaussSeidel;
         tolerance       1e-10;
         //tolerance       (1e-10 1e-8 1);
-        relTol          1e-5;
+        relTol          1e-2;
         //relTol          (0.01 0.01 1);
     }
 
@@ -56,8 +56,10 @@ solvers
     {
         solver          PBiCGStab;
         preconditioner  DILU;
+        smoother        DILU;
         tolerance       1e-10;
-        relTol          1e-4;
+        relTol          1e-2;
+        maxIter         20;
     }
 
     "(c|psi|chi|xi)Final"
@@ -72,9 +74,9 @@ solvers
 {
     consistent yes;
     momentumPredictor   on;
-    nOuterCorrectors    100;
-    nCorrectors         10;
-    nNonOrthogonalCorrectors 0;
+    nOuterCorrectors    5;//100;  // PIMPLE loops
+    nCorrectors         10;   // pressure loop
+    nNonOrthogonalCorrectors 1;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
@@ -92,7 +94,7 @@ solvers
         U
         {
             tolerance 1e-3;
-            relTol    1e-1;
+            relTol 1e-1;
         }
     }
 }
