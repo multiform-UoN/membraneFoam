@@ -35,7 +35,7 @@ writeInterval   $writestep;
 
 purgeWrite      0;
 
-writeFormat     binary;
+writeFormat     ascii;//binary;
 
 writePrecision  6;
 
@@ -50,7 +50,7 @@ runTimeModifiable true;
 libs
 ("libmembraneMayo.so");
 
-//#include "postProcess"
+#include "postProcess"
 
 
 
