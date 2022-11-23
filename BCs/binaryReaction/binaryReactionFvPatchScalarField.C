@@ -214,30 +214,29 @@ void Foam::binaryReactionFvPatchScalarField::updateCoeffs()
       timeIndex_ = this->db().time().timeIndex();
     }
 
-    scalarField reaction((C-xi)*(C+xi));
+    scalarField reaction((C-xi)*(C+xi));  // chi^2 - xi^2
 
-    if (reactionType_=="2")
-    {
-      reaction *= (C-xi)/scalar(2);
-    }
+    // if (reactionType_=="2")
+    // {
+    //   reaction *= (C-xi)/scalar(2);
+    // }
 
     // - Evolution equation for S (implicit time stepping)
-    S_ = (S0_ + deltaT*(RobinKorig*reaction + RobinF0*(xi-C)))
+    S_ = (S0_ + deltaT*RobinKorig*reaction )  // mol/area => RobinK0 [vol/mol l/t] = K0_bulk*width
           /
           (scalar(1) + deltaT*Kd_);
 
     //- Firt guess for Robin coefficients
-    RobinKeff_ = - RobinKorig + RobinK0
-                - scalar(2)*RobinKorig*C;
+    RobinKeff_ = - RobinKorig + RobinK0   // advective term
+                 - scalar(2)*RobinKorig*C; // linearised reactive term (implicit)
 
-    RobinFeff_ = (RobinKorig*reaction + RobinF0*(xi-C))
-                - RobinKeff_*C
-                + Kd_*S_;
+    RobinFeff_ =   RobinKorig*xi*xi // K chi0^2 + Kxi^2
+                 + RobinKorig*C*C
+                 + Kd_*S_;
   }
 
   RobinFvPatchScalarField::updateCoeffs();
 }
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

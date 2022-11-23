@@ -67,9 +67,8 @@ int main(int argc, char *argv[])
     while (runTime.run())
     {
 
-#       include "CourantNo.H"
-#       include "setDeltaT.H"
-
+        #include "CourantNo.H"
+        #include "setDeltaT.H"
         runTime++;
 
         Info<< "Time = " << runTime.timeName() << nl << endl;
@@ -110,18 +109,20 @@ int main(int argc, char *argv[])
 
             const surfaceScalarField psif(fvc::interpolate(psi));
 
-            #include "chiEqn.H"
+            // -- solve for the concentrations
+            #include "xiEqn.H"  // conserved variable - mixture fraction
 
-            #include "xiEqn.H"
+            #include "chiEqn.H" // non-conserved variable - progress variable
 
-            #include "updatePhiSlip.H"
+            // // -- solve for the solid phase
+            // #include "updatePhiSlip.H"
 
-            const surfaceScalarField phic
-              ("phi",
-                phi+phislip
-              );
+            // const surfaceScalarField phic
+            //   ("phi",
+            //     phi+phislip
+            //   );
 
-            #include "psiEqn.H"
+            // #include "psiEqn.H"
 
 
         } // End corrector

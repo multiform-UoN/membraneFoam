@@ -200,8 +200,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         // assuming zero concentration on the other side
         if (writeAvg_)
         {
-            Info << " DeltaTP = " << gSum(this->patch().magSf()*deltaP)/area
-              << " DeltaOP = " << gSum(this->patch().magSf()*osmoticC_*cc)/area;
+            Info << " DeltaTP = " << gSum(this->patch().magSf()*deltaP)/area        // average total pressure
+                 << " DeltaOP = " << gSum(this->patch().magSf()*osmoticC_*cc)/area; // average osmotic pressure
         }
     }
 
@@ -236,35 +236,34 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
             phi_ = phi0_ - solidV_*ss/w_;
             phi_ *= Foam::pos(phi_);
 
-            // Additional solid (hard-coded)
+            // // Additional solid (hard-coded)
+            // if  (
+            //     mesh.objectRegistry::
+            //     template foundObject<volScalarField>(solidS_+"2")
+            //     )
+            // {
+            //     //- solid concentration on the surface
+            //     const fvPatchScalarField& cc2
+            //         =
+            //         patch().lookupPatchField<volScalarField, scalar>(solidS_+"2");
 
-            if  (
-                mesh.objectRegistry::
-                template foundObject<volScalarField>(solidS_+"2")
-                )
-            {
-                //- solid concentration on the surface
-                const fvPatchScalarField& cc2
-                    =
-                    patch().lookupPatchField<volScalarField, scalar>(solidS_+"2");
+            //     scalarField ss2(cc2);
 
-                scalarField ss2(cc2);
+            //     // - binaryReaction BC
+            //     if  (binaryReaction_)
+            //     {
+            //         const binaryReactionFvPatchScalarField& Cpr
+            //         (
+            //         refCast<const binaryReactionFvPatchScalarField>(cc)
+            //         );
 
-                // - binaryReaction BC
-                if  (binaryReaction_)
-                {
-                    const binaryReactionFvPatchScalarField& Cpr
-                    (
-                    refCast<const binaryReactionFvPatchScalarField>(cc)
-                    );
+            //         ss2 = Cpr.S();
+            //     }
 
-                    ss2 = Cpr.S();
-                }
-
-                // porosity
-                phi_ = phi_ - solidV_*ss2/w_;
-                phi_ *= Foam::pos(phi_);
-            }
+            //     // porosity
+            //     phi_ = phi_ - solidV_*ss2/w_;
+            //     phi_ *= Foam::pos(phi_);
+            // }
             
             //- permeability
             K_ =  K0_
