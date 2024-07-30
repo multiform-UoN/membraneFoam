@@ -48,9 +48,9 @@ timePrecision   6;
 runTimeModifiable true;
 
 libs
-("libmembraneMayo.so");
+("libmembrane.so");
 
-//#include "postProcess"
+//#include "../../postProcess"
 
 
 

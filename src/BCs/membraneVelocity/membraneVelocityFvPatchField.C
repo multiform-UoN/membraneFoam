@@ -42,6 +42,7 @@ Foam::membraneVelocityFvPatchField::membraneVelocityFvPatchField
     p0_(p.size(), scalar(0)),
     w_(scalar(1e-4)),
     K_(p.size(),K0_),
+    Ks_(K0_*scalar(1e-3)),
     phi_(p.size(),scalar(0.5)),
     solidM_("none"),
     solidS_("none"),
@@ -66,6 +67,7 @@ Foam::membraneVelocityFvPatchField::membraneVelocityFvPatchField
     p0_("outsidePressure", dict, p.size()),
     w_(dict.lookupOrDefault<scalar>("membraneWidth",scalar(1e-4))),
     K_(p.size(), K0_),
+    Ks_(dict.lookupOrDefault<scalar>("solidPermeability",scalar(1e-12))),
     phi_(p.size(), phi0_),
     solidM_(dict.lookupOrDefault<word>("solidModel","none")),
     solidS_(dict.lookupOrDefault<word>("solidSource","none")),
@@ -93,6 +95,7 @@ Foam::membraneVelocityFvPatchField::membraneVelocityFvPatchField
     p0_(mapper(ptf.p0_)),
     w_(ptf.w_),
     K_(mapper(ptf.K_)),
+    Ks_((ptf.Ks_)),
     phi_(mapper(ptf.phi_)),
     solidM_(ptf.solidM_),
     solidS_(ptf.solidS_),
@@ -115,6 +118,7 @@ Foam::membraneVelocityFvPatchField::membraneVelocityFvPatchField
     p0_(ptf.p0_),
     w_(ptf.w_),
     K_((ptf.K_)),
+    Ks_((ptf.Ks_)),
     phi_((ptf.phi_)),
     solidM_(ptf.solidM_),
     solidS_(ptf.solidS_),
@@ -138,6 +142,7 @@ Foam::membraneVelocityFvPatchField::membraneVelocityFvPatchField
     p0_(ptf.p0_),
     w_(ptf.w_),
     K_((ptf.K_)),
+    Ks_((ptf.Ks_)),
     phi_((ptf.phi_)),
     solidM_(ptf.solidM_),
     solidS_(ptf.solidS_),
@@ -186,7 +191,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
     {
         Info<<"membraneVelocity BC " << this->patch().name()
           << " Time = " << mesh.time().timeName()
-          << " Vel = " <<  gSum(this->patch().magSf()*(*this))/area;
+          << " Vel = " <<  gSum(this->patch().magSf()*(*this))/area
+          << endl;
     }
     if  (
         mesh.objectRegistry::
@@ -202,7 +208,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         if (writeAvg_)
         {
             Info << " DeltaPTot = " << gSum(this->patch().magSf()*deltaP)/area        // average total pressure
-                 << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area; // average osmotic pressure
+                 << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area  // average osmotic pressure
+                 << endl;
         }
     }
 
@@ -277,7 +284,26 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
             if (writeAvg_)
             {
                 Info << " Perm = " << gSum(this->patch().magSf()*K_)/area
-                    << " Por = " << gSum(this->patch().magSf()*phi_)/area;
+                    << " Por = " << gSum(this->patch().magSf()*phi_)/area << endl;
+            }
+        }
+        else if (solidM_=="scalingLayer")
+        {
+            // // DEBUG
+            // Info << endl << "Scaling layer model" << endl;
+            // Info << "K0_ = " << K0_ << endl;
+            // Info << "Ks_ = " << Ks_ << endl;
+            // Info << (w_/K0_ + solidV_*ss/Ks_) << endl;
+
+
+            // harmonic average of K0_ and Ks_ weighted by w_ and ss respectively
+            K_ = (w_+solidV_*ss)/(w_/K0_ + solidV_*ss/Ks_); 
+            // ss here takes the role of the scaling layer thickness
+
+            if (writeAvg_)
+            {
+                Info << " Perm = " << gSum(this->patch().magSf()*K_)/area
+                    << " scalingLayer = " << gSum(this->patch().magSf()*ss)/area << endl;
             }
         }
     }

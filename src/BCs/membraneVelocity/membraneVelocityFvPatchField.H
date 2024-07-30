@@ -74,6 +74,8 @@ class membraneVelocityFvPatchField
         scalar w_;
         //- permeability
         scalarField K_;
+        //- scaling permeability
+        scalar Ks_;
         //- porosity
         scalarField phi_;
 

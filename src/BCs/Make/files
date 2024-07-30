@@ -7,4 +7,4 @@ membranePressure/membranePressureFvPatchField.C
 membranePressureGrad/membranePressureGradFvPatchField.C
 
 
-LIB = $(FOAM_USER_LIBBIN)/libmembraneMayo
+LIB = $(FOAM_USER_LIBBIN)/libmembrane

@@ -55,9 +55,10 @@ boundaryField
         osmoticCoefficient $osmotic;
         solidSource "chi";
         solidConcentration "binaryReaction";
-        solidModel "KozenyCarman32";
+        solidModel "scalingLayer"; // KozenyCarman32, scalingLayer
         solidBinaryReaction true;
         solidVolume $molVolume;
+        solidPermeability 1;//$solidPermeability;
         writeAvg true;
 
         outsidePressure uniform $pp;

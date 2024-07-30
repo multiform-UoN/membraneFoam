@@ -29,3 +29,4 @@ thickness 1e-3;
 porosity 0.7;
 osmotic 100;
 molVolume 1;
+solidPermeability 1e-18;

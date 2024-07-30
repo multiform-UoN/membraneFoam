@@ -48,57 +48,9 @@ timePrecision   6;
 runTimeModifiable true;
 
 libs
-("libmultiformFoam.so");
+("libmembrane.so");
 
-functions
-{
-    breakthrough
-    {
-        // Load the library containing the 'coded' functionObject
-        libs            ("libutilityFunctionObjects.so");
-
-        type coded;
-
-        // Name of on-the-fly generated functionObject
-        name breakthrough;
-
-        codeWrite
-        #{
-            // Lookup c
-            //Info<< "Looking up field c\n" << endl;
-            const volScalarField& c = mesh().lookupObject<volScalarField>("chi");
-            const volScalarField& p = mesh().lookupObject<volScalarField>("p");
-            const surfaceScalarField& U = mesh().lookupObject<surfaceScalarField>("phi");
-
-            //Get outlet patch
-            label patchIdOut = mesh().boundaryMesh().findPatchID("outlet");
-            label patchIdIn = mesh().boundaryMesh().findPatchID("inlet");
-            const scalarField& cOut(c.boundaryField()[patchIdOut]);
-            const scalarField& cIn(c.boundaryField()[patchIdIn]);
-            const scalarField& pOut(p.boundaryField()[patchIdOut]);
-            const scalarField& magSfOut(mesh().magSf().boundaryField()[patchIdOut]);
-            const scalarField& Uout(U.boundaryField()[patchIdOut]);
-            const vectorField& SfIn( mesh().Sf().boundaryField()[patchIdOut]);
-            const scalarField& magSfIn(mesh().magSf().boundaryField()[patchIdIn]);
-            const scalarField& UIn(U.boundaryField()[patchIdIn]);
-
-            const scalar CfluxOut(gSum(cOut*Uout));
-            const scalar COut(gSum(cOut*magSfOut)/gSum(magSfOut));
-            const scalar CfluxIn(gSum(cIn*UIn));
-
-            const scalar totFluxOut = gSum(Uout);
-            const scalar totFluxIn = gSum(UIn);
-            const scalar pMean = gSum(pOut*magSfOut)/gSum(magSfOut);
-
-            Info << "functionObject Time " << mesh().time().timeName() <<  " Fluxes Out/In/Relative  "
-               << " " << totFluxOut <<" " << totFluxIn << " " << totFluxOut/(totFluxIn+SMALL);
-            Info << " Concentration Membrane/In/Average " //<< mesh().time().timeName()
-              << " " << CfluxOut <<" " << CfluxIn << " " << COut;
-            Info << " PressureMembrane " //<< mesh().time().timeName()
-               << " " << pMean <<"\n\n";
-        #};
-    }
-}
+//#include "../../postProcess"
 
 
 
