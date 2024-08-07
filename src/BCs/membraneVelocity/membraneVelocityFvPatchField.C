@@ -168,8 +168,8 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
     const fvMesh& mesh = this->internalField().mesh();
     const scalar area(gSum(this->patch().magSf()));
 
+    // Find the pressure
     scalarField deltaP((-p0_));
-
     if  (
         mesh.objectRegistry:: template foundObject<volScalarField>("p")
         )
@@ -179,13 +179,23 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         deltaP += p;
     }
 
-    dimensionedScalar nu
-        (
-            db().lookupObject<IOdictionary>
-            (
-                "transportProperties"
-            ).lookup("nu")
-        );
+    // Find the viscosity
+    scalar nu(1);
+    if (
+        mesh.objectRegistry:: template foundObject<IOdictionary>("transportProperties")
+        )
+    {
+        nu = dimensionedScalar(db().lookupObject<IOdictionary>
+                (
+                    "transportProperties"
+                ).lookup("nu")).value();
+    }
+    else
+    {
+        WarningIn("membraneVelocityFvPatchField")
+            << "No transportProperties found, using nu=1" << endl;
+    }
+
 
     if (writeAvg_)
     {
@@ -314,7 +324,7 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
           *
           deltaP
           *
-          K_/(nu.value()*w_)
+          K_/(nu*w_)
       );
 
     fixedValueFvPatchField<vector>::updateCoeffs();
