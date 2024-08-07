@@ -178,6 +178,11 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
             patch().lookupPatchField<volScalarField, scalar>("p");
         deltaP += p;
     }
+    else
+    {
+        WarningIn("membraneVelocityFvPatchField")
+            << "No pressure found, using p=0" << endl;
+    }
 
     // Find the viscosity
     scalar nu(1);
