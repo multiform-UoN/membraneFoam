@@ -16,7 +16,7 @@ FoamFile
 
 #include "../input.txt"
 
-convertToMeters 1e-3;
+convertToMeters $scale;
 
 vertices
 (

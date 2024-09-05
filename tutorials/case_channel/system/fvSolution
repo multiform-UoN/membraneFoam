@@ -19,17 +19,18 @@ solvers
 {
     p
     {
-        solver          GAMG;//PBiCGStab;
+        solver          GAMG;
         smoother        FDIC;
         preconditioner  FDIC;
         tolerance       1e-10;
         relTol          1e-2;
-        //maxIter         20;
+        maxIter         20;
     }
 
     pFinal
     {
         $p;
+        solver          PCG;
         relTol          0;
     }
 
@@ -76,7 +77,7 @@ solvers
     momentumPredictor   on;
     nOuterCorrectors    5;//100;  // PIMPLE loops
     nCorrectors         10;   // pressure loop
-    nNonOrthogonalCorrectors 1;
+    nNonOrthogonalCorrectors 4;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
@@ -103,7 +104,7 @@ relaxationFactors
 {
     equations
     {
-        U 0.95;
+        U 0.99;
         p 1;
     }
     fields

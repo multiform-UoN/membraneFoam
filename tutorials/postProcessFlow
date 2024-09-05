@@ -1,0 +1,42 @@
+functions
+{
+    breakthrough
+    {
+        // Load the library containing the 'coded' functionObject
+        libs            ("libutilityFunctionObjects.so");
+
+        type coded;
+
+        // Name of on-the-fly generated functionObject
+        name recovery;
+
+        codeWrite
+        #{
+            // Lookup c
+            //Info<< "Looking up field c\n" << endl;
+            const volScalarField& p = mesh().lookupObject<volScalarField>("p");
+            const surfaceScalarField& U = mesh().lookupObject<surfaceScalarField>("phi");
+
+            //Get outlet patch
+            label patchIdOut = mesh().boundaryMesh().findPatchID("outlet");
+            label patchIdIn = mesh().boundaryMesh().findPatchID("inlet");
+            label patchIdMem = mesh().boundaryMesh().findPatchID("bottom");
+            const scalarField& pMem(p.boundaryField()[patchIdMem]);
+            const scalarField& magSfMem(mesh().magSf().boundaryField()[patchIdMem]);
+            const scalarField& magSfOut(mesh().magSf().boundaryField()[patchIdOut]);
+            const scalarField& Uout(U.boundaryField()[patchIdOut]);
+            const vectorField& SfIn( mesh().Sf().boundaryField()[patchIdOut]);
+            const scalarField& magSfIn(mesh().magSf().boundaryField()[patchIdIn]);
+            const scalarField& UIn(U.boundaryField()[patchIdIn]);
+
+            const scalar totFluxOut = gSum(Uout);
+            const scalar totFluxIn = -gSum(UIn);
+            const scalar pMean = gSum(pMem*magSfMem)/gSum(magSfMem);
+
+            Info << endl << " Time " << mesh().time().timeName() <<  " Fluxes Out/In/Recovery  "
+               << " " << totFluxOut <<" " << totFluxIn << " " << 1.0 - totFluxOut/(totFluxIn+SMALL) << endl;
+            Info << " PressureMembrane " //<< mesh().time().timeName()
+               << " " << pMean << endl;
+        #};
+    }
+}

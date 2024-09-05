@@ -26,13 +26,13 @@ boundaryField
 
     outlet
     {
-        type            fixedValue;//fixedJump;
+        type            fixedValue;       //fixedJump;
         value           uniform $pout;
     }
 
     wall
     {
-        type            fixedFluxPressure;//fixedJump;
+        type            zeroGradient; // fixedFluxPressure;  //fixedJump;
     }
 
 
