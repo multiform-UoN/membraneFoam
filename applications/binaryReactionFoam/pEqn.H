@@ -6,18 +6,12 @@ surfaceScalarField phiHbyA
     fvc::flux(HbyA)
 );
 
-if (p.needReference())
-{
-    fvc::makeRelative(phiHbyA, U);
-    adjustPhi(phiHbyA, U, p);
-    fvc::makeAbsolute(phiHbyA, U);
-}
-
 tmp<volScalarField> rAtU(rAU);
 
 if (pimple.consistent())
 {
-    rAtU = 1.0/max(1.0/rAU - UEqn.H1(), 0.1/rAU);
+    rAtU = 1.0/(1.0/rAU - UEqn.H1());
+    // rAtU = 1.0/max(1.0/rAU - UEqn.H1(), 0.1/rAU);
     phiHbyA +=
         fvc::interpolate(rAtU() - rAU)*fvc::snGrad(p)*mesh.magSf();
     HbyA -= (rAU - rAtU())*fvc::grad(p);
@@ -42,8 +36,8 @@ while (pimple.correctNonOrthogonal())
         fvc::div
         (
           phiHbyA
-          +
-          fvc::interpolate(psi)*phislip
+        //   +
+        //   fvc::interpolate(psi)*phislip
         )
     );
 

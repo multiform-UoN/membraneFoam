@@ -17,16 +17,5 @@ FoamFile
 
 simulationType laminar;
 
-RAS
-{
-    // Tested with kEpsilon, realizableKE, kOmega, kOmegaSST, v2f,
-    // ShihQuadraticKE, LienCubicKE.
-    RASModel        kEpsilon;
-
-    turbulence      on;
-
-    printCoeffs     on;
-}
-
 
 // ************************************************************************* //

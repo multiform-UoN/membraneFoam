@@ -4,13 +4,13 @@ MRF.correctBoundaryVelocity(U);  //added
 tmp<fvVectorMatrix> tUEqn
 (
    // Stokes approximation
-   fvm::ddt(U)
-   +
+//    fvm::ddt(U)
+//    +
    fvm::div(phi, U)
    -
    fvm::laplacian(nu, U)
    -
-   fvc::div(nu*dev2(fvc::grad(U)().T()))
+   fvc::div(nu*dev2(T(fvc::grad(U)())))
    ==
    fvOptions(U)
 );

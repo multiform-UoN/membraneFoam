@@ -19,6 +19,7 @@ ddtSchemes
 {
     default         steadyState;
     binaryReaction  Euler;
+    U               steadyState;
 }
 
 gradSchemes

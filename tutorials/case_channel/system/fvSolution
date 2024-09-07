@@ -24,13 +24,13 @@ solvers
         preconditioner  FDIC;
         tolerance       1e-10;
         relTol          1e-2;
-        maxIter         20;
+        maxIter         50;
     }
 
     pFinal
     {
         $p;
-        solver          PCG;
+        // solver          PCG;
         relTol          0;
     }
 
@@ -75,9 +75,9 @@ solvers
 {
     consistent yes;
     momentumPredictor   on;
-    nOuterCorrectors    5;//100;  // PIMPLE loops
-    nCorrectors         10;   // pressure loop
-    nNonOrthogonalCorrectors 4;
+    nOuterCorrectors    1;//100;  // PIMPLE loops
+    nCorrectors         1;   // pressure loop
+    nNonOrthogonalCorrectors 3;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;

@@ -58,8 +58,8 @@ boundaryField
         solidModel "scalingLayer"; // KozenyCarman32, scalingLayer
         solidBinaryReaction true;
         solidVolume $molVolume;
-        solidPermeability 1;//$solidPermeability;
-        writeAvg true;
+        solidPermeability $solidPermeability;
+        writeAvg $writeAvg;
 
         outsidePressure uniform $pp;
 

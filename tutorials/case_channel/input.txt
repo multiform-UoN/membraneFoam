@@ -8,10 +8,10 @@ scale 1;
 //-- time scales
 timestep 1;
 finaltime 10000;
-writestep 10000;
+writestep 100;
 
 //-- inlet concentration
-inletChi 1;
+inletChi 1.0;
 initialChi 0.0;
 
 //- fluid properties
@@ -22,12 +22,13 @@ pin  9e3;
 pout 4e3;
 
 //- reaction
-reactionConstant 1e-5;
+reactionConstant 0;
 
 //- membrane properties
 permeability 1e-12;
 thickness 1e-3;
 porosity 0.7;
-osmotic 100;
+osmotic 0;
 molVolume 1;
 solidPermeability 1e-18;
+writeAvg true;

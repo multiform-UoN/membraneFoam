@@ -226,8 +226,7 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
                  << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area  // average osmotic pressure
                  << endl;
             // Further debug as there is some nan somehwere
-            Info << " DeltaP = " << deltaP << " osmoticC = " << osmoticC_ << " cc = " << cc << " area = " << area << endl;
-            
+            Info << " DeltaP = " << gSum(deltaP)  << " area = " << area << endl;            
         }
     }
 
