@@ -17,7 +17,7 @@ FoamFile
 
 ddtSchemes
 {
-    default         backward;
+    default         steadyState;//backward;
     binaryReaction  Euler;
 }
 
@@ -34,7 +34,7 @@ divSchemes
     div((nuEff*dev2(T(grad(U))))) Gauss linear;
     div(phi,psi)      Gauss upwind; //bounded Gauss vanLeer;
     div(phi,xi)      Gauss upwind; //bounded Gauss vanLeer;
-    div(phi,chi)      Gauss upwind; //bounded Gauss vanLeer;
+    div(phi,chi)      bounded Gauss upwind; //bounded Gauss vanLeer;
 }
 
 laplacianSchemes

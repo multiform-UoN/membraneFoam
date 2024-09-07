@@ -76,8 +76,8 @@ solvers
     consistent yes;
     momentumPredictor   on;
     nOuterCorrectors    1;//100;  // PIMPLE loops
-    nCorrectors         1;   // pressure loop
-    nNonOrthogonalCorrectors 3;
+    nCorrectors         3;   // pressure loop
+    nNonOrthogonalCorrectors 1;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
@@ -106,6 +106,7 @@ relaxationFactors
     {
         U 0.99;
         p 1;
+        chi 0.9;
     }
     fields
     {
