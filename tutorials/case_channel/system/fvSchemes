@@ -17,9 +17,8 @@ FoamFile
 
 ddtSchemes
 {
-    default         steadyState;
+    default         backward;
     binaryReaction  Euler;
-    U               steadyState;
 }
 
 gradSchemes

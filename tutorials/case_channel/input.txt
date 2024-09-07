@@ -6,7 +6,7 @@ ycells 120;
 scale 1;
 
 //-- time scales
-timestep 1;
+timestep 1e-4;
 finaltime 10000;
 writestep 100;
 
@@ -28,7 +28,7 @@ reactionConstant 0;
 permeability 1e-12;
 thickness 1e-3;
 porosity 0.7;
-osmotic 0;
+osmotic 100;
 molVolume 1;
 solidPermeability 1e-18;
 writeAvg true;

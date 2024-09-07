@@ -43,7 +43,7 @@ solvers
         smoother        symGaussSeidel;
         tolerance       1e-10;
         //tolerance       (1e-10 1e-8 1);
-        relTol          1e-2;
+        relTol          1e-3;
         //relTol          (0.01 0.01 1);
     }
 
@@ -59,8 +59,8 @@ solvers
         preconditioner  DILU;
         smoother        DILU;
         tolerance       1e-10;
-        relTol          1e-2;
-        maxIter         20;
+        relTol          1e-3;
+        // maxIter         20;
     }
 
     "(c|psi|chi|xi)Final"

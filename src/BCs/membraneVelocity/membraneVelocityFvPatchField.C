@@ -223,10 +223,9 @@ void Foam::membraneVelocityFvPatchField::updateCoeffs()
         if (writeAvg_)
         {
             Info << " DeltaPTot = " << gSum(this->patch().magSf()*deltaP)/area        // average total pressure
-                 << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area  // average osmotic pressure
+                 << endl << " DeltaPOsm = " << gSum(this->patch().magSf()*osmoticC_*cc)/area  // average osmotic pressure
+                 << endl << " Solidmean = " << gSum(this->patch().magSf()*cc)/area            // average concentration
                  << endl;
-            // Further debug as there is some nan somehwere
-            Info << " DeltaP = " << gSum(deltaP)  << " area = " << area << endl;            
         }
     }
 
