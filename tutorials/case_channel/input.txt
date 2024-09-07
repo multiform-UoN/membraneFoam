@@ -18,7 +18,7 @@ initialChi 1.0;
 viscosity 1e-3;
 diffusivity 1e-9;
 pp   0;
-pin  1e4;
+pin  8e3;
 pout 5e3;
 
 //- reaction
