@@ -29,14 +29,18 @@
         transportProperties.lookup("Kf")
     );
 
+    dimensionedScalar nu0
+    (
+        transportProperties.lookup("nu")
+    );
+
+    // dimensionedScalar rho
+    // (
+    //     transportProperties.lookup("rho")
+    // );
 
     // Reology coefficients
     const dictionary rheology(transportProperties.subDict("rheology"));
-
-    dimensionedScalar nu0
-    (
-        rheology.lookup("nu")
-    );
 
     dimensionedScalar cm
     (
@@ -151,6 +155,7 @@
 
     Info<< "Creating viscosity field\n" << endl;
 
+    // Dynamic viscosity
     volScalarField nu
     (
         IOobject
@@ -193,7 +198,7 @@
     setRefCell(p, mesh.solutionDict().subDict("PIMPLE"), pRefCell, pRefValue);
     mesh.setFluxRequired(p.name());
 
-    #include "createMRF.H"       //added
-    #include "createFvOptions.H" //added
+    // #include "createMRF.H"       //added
+    // #include "createFvOptions.H" //added
 
 /////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-MRF.correctBoundaryVelocity(U);  //added
+// MRF.correctBoundaryVelocity(U);  //added
 
 // Momentum predictor
 tmp<fvVectorMatrix> tUEqn
@@ -11,18 +11,13 @@ tmp<fvVectorMatrix> tUEqn
    fvm::laplacian(nu, U)
    -
    fvc::div(nu*dev2(T(fvc::grad(U)())))
-   ==
-   fvOptions(U)
 );
 
 fvVectorMatrix& UEqn = tUEqn.ref();
 
 UEqn.relax();
-fvOptions.constrain(UEqn);
 
 if (pimple.momentumPredictor())
 {
     solve(UEqn == -fvc::grad(p));
-
-    fvOptions.correct(U);
 }

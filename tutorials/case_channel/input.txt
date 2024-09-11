@@ -15,20 +15,20 @@ inletChi 1.0;
 initialChi 1.0;
 
 //- fluid properties
-viscosity 1e-3;
+viscosity 1e-6;
 diffusivity 1e-9;
 pp   0;
-pin  8e3;
-pout 5e3;
+pin  0;
+pout 1e4;
 
 //- reaction
 reactionConstant 0;
 
 //- membrane properties
-permeability 1e-15;
+permeability 3e-19;
 thickness 1e-4;
 porosity 0.7;
 osmotic 100;
 molVolume 1e-6;
-solidPermeability 1e-18;
+solidPermeability 1e-20;
 writeAvg true;

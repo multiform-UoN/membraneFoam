@@ -38,7 +38,7 @@ boundaryField
 
     inlet 	
     {
-        type            fixedValue;
+        type            fixedFluxPressure;//fixedValue;
         value           uniform $pin;
     }
 

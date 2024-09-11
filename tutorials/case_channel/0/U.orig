@@ -42,7 +42,8 @@ boundaryField
 
     inlet
     {
-       type zeroGradient;
+       type fixedValue;//zeroGradient;
+       value uniform (0.1 0 0);
     }
 
     bottom
