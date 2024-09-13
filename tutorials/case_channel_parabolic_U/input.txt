@@ -1,0 +1,34 @@
+//-- mesh size
+length 1;
+width  1e-3;
+xcells 100;
+ycells 100;
+scale 1;
+
+//-- time scales
+timestep 1;
+finaltime 1000;
+writestep 100;
+
+//-- inlet concentration
+inletChi 1.0;
+initialChi 1.0;
+
+//- fluid properties
+viscosity 1e-6;
+diffusivity 1e-9;
+pp   0;
+pin  0;
+pout 1e4;
+
+//- reaction
+reactionConstant 0;
+
+//- membrane properties
+permeability 3e-19;
+thickness 1e-4;
+porosity 0.7;
+osmotic 100;
+molVolume 1e-6;
+solidPermeability 1e-20;
+writeAvg true;
