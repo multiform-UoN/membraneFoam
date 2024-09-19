@@ -77,8 +77,8 @@ solvers
     consistent yes;
     momentumPredictor   off;
     nOuterCorrectors    1;//100;  // PIMPLE loops
-    nCorrectors         10;   // pressure loop
-    nNonOrthogonalCorrectors 1;
+    nCorrectors         3;   // pressure loop
+    nNonOrthogonalCorrectors 2;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
