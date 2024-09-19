@@ -15,16 +15,17 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+tol           1e-12;
 solvers
 {
     p
     {
-        solver          GAMG;
-        smoother        FDIC;
-        preconditioner  FDIC;
-        tolerance       1e-10;
-        relTol          1e-2;
-        maxIter         50;
+        solver          PCG; // GAMG or PCG or smoothSolver
+        smoother        symGaussSeidel; // DIC FDIC symGaussSeidel GaussSeidel
+        preconditioner  DIC;  // GAMG, DIC, DILU, FDIC
+        tolerance       $tol;
+        relTol          1e-4;
+        maxIter         500;
     }
 
     pFinal
@@ -41,9 +42,9 @@ solvers
         //solver          PBiCCCG;
         preconditioner  DILU;
         smoother        symGaussSeidel;
-        tolerance       1e-10;
+        tolerance       $tol;
         //tolerance       (1e-10 1e-8 1);
-        relTol          1e-3;
+        relTol          1e-4;
         //relTol          (0.01 0.01 1);
     }
 
@@ -58,7 +59,7 @@ solvers
         solver          PBiCGStab;
         preconditioner  DILU;
         smoother        DILU;
-        tolerance       1e-10;
+        tolerance       $tol;
         relTol          1e-3;
         // maxIter         20;
     }
@@ -74,28 +75,23 @@ solvers
 "PIMPLE|PISO|SIMPLE"
 {
     consistent yes;
-    momentumPredictor   on;
+    momentumPredictor   off;
     nOuterCorrectors    1;//100;  // PIMPLE loops
-    nCorrectors         3;   // pressure loop
+    nCorrectors         10;   // pressure loop
     nNonOrthogonalCorrectors 1;
     pRefCell            0;
     pRefValue           0;
     turbOnFinalIterOnly no;
     residualControl
     {
-        ".*"           1e-15;
+        ".*"           $tol;
     }
     outerCorrectorResidualControl //residualControl
     {
         ".*"
         {
-            tolerance 1e-6;
-            relTol    1e-3;
-        }
-        U
-        {
-            tolerance 1e-3;
-            relTol 1e-1;
+            tolerance $tol;
+            relTol    1e-4;
         }
     }
 }
@@ -106,7 +102,7 @@ relaxationFactors
     {
         U 0.95;
         p 1;
-        chi 0.9;
+        chi 0.98;
     }
     fields
     {

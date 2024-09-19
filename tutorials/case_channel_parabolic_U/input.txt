@@ -25,7 +25,7 @@ pout 1e4;
 reactionConstant 0;
 
 //- membrane properties
-permeability 3e-19;
+permeability 3e-20;
 thickness 1e-4;
 porosity 0.7;
 osmotic 100;
