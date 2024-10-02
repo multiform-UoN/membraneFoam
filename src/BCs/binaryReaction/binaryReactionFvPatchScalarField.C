@@ -1,25 +1,22 @@
 /*---------------------------------------------------------------------------*\
-=========                 |
-\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-\\    /   O peration     |
-\\  /    A nd           | Copyright (C) 2015-2019
-\\/     M anipulation  | Matteo Icardi, Federico Municchi
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     |
+    \\  /    A nd           | Copyright (C) The OpenFOAM Foundation, Ltd.
+     \\/     M anipulation  | 
 -------------------------------------------------------------------------------
-License
-This file is derivative work of OpenFOAM.
+  
+  Modifications and additional contributions:
+  
+  MultiForm Group, University of Nottingham
+  Copyright (C) Matteo Icardi and collaborators
+  Contributions to this file are licensed under the same GPLv3 terms as OpenFOAM.
 
-OpenFOAM is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-for more details.
-
-You should have received a copy of the GNU General Public License
-along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+  This work is based on OpenFOAM, with substantial portions copied, modified, or 
+  extended under the GNU General Public License (GPLv3).
+  Please refer to the original OpenFOAM copyright notice for the base framework, 
+  and to MultiForm Group for new additions or modifications. For the full terms of 
+  this license, see <http://www.gnu.org/licenses/>.
 
 \*---------------------------------------------------------------------------*/
 
